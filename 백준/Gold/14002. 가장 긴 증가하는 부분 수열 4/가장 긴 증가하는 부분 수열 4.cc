@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
 int a[1005];
 int d[1005];
 int pre[1005];
@@ -9,6 +8,8 @@ int pre[1005];
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
+
+	int n;
 	cin >> n;
 
 	for (int i = 1; i <= n; i++)
@@ -25,21 +26,20 @@ int main() {
 	}
 	int maxI = 1;
 	int maxD = d[1];
-	for (int i = 1; i <= n; i++) {
+	for (int i = 2; i <= n; i++) {
 		if (maxD < d[i]) {
 			maxI = i;
 			maxD = d[i];
 		}
 	}
-
-	vector<int> ans;
+	deque<int> ans;
 	int cur = maxI;
 	while (cur) {
-		ans.push_back(a[cur]);
+		ans.push_front(a[cur]);
 		cur = pre[cur];
 	}
 	cout << ans.size() << '\n';
-	reverse(ans.begin(), ans.end());
 	for (auto c : ans)
 		cout << c << ' ';
+
 }

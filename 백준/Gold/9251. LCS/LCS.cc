@@ -9,13 +9,14 @@ int main() {
 
 	string a, b;
 	cin >> a >> b;
-	int len_a = a.length();
-	int len_b = b.length();
 
-	for (int i = 1; i <= len_a; i++)
-		for (int j = 1; j <= len_b; j++) {
+	int lenA = a.length();
+	int lenB = b.length();
+
+	for (int i = 1; i <= lenA; i++)
+		for (int j = 1; j <= lenB; j++) {
 			if (a[i - 1] == b[j - 1]) d[i][j] = d[i - 1][j - 1] + 1;
 			else d[i][j] = max(d[i - 1][j], d[i][j - 1]);
 		}
-	cout << d[len_a][len_b];
+	cout << d[lenA][lenB];
 }

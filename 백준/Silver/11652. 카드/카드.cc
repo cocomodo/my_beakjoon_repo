@@ -12,7 +12,7 @@ int main(){
         cin>>a[i];
     sort(a,a+n);
     int cnt=1;
-    long long mxval=-(1ll<<62)-1;
+    long long mxval=0;
     int mxcnt=0;
     for(int i=1; i<n; i++){
         if(a[i-1]==a[i]) cnt++; //이번 항이 전 항과 같아서 cnt를 증가시킬때. 이 경우 맨 마지막에 이 연산이 진행되면 판단 절차는 진행되지 않는다. 그래서 for문 밖에 빼서 진행시켜주어야 한다. 

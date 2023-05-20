@@ -1,31 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-bool compare(string a, string b) {
-	int i = 0;
-	if (a.length() == b.length()) {
-		for (int i = 0; i < a.length(); i++) {
-			if (a[i] != b[i])
-				return a[i] < b[i]; 
-		}
-	}
-	return a.length() < b.length();
+string st[20'005];
+bool cmp(const string& a, const string& b){
+    int lena=a.size(),lenb=b.size();
+    if(lena!=lenb) return lena<lenb;
+    return a<b;
 }
-
-int main() {
-	int num;
-	string tmp;
-	cin >> num;
-	string arr[20'000];
-	for (int i = 0; i < num; i++) {
-		cin >> tmp;
-		arr[i] = tmp;
-	}
-	sort(arr, arr+num, compare);
-	cout << arr[0] << "\n";
-	for (int i = 1; i < num; i++) {
-		if (arr[i - 1] == arr[i])
-			continue;
-		cout << arr[i] << "\n";
-	}
+int main(){
+    ios::sync_with_stdio(0); 
+    cin.tie(0);
+    int n;
+    cin>>n;
+    for(int i=0; i<n; i++) cin>>st[i];
+    sort(st,st+n,cmp);
+    for(int i=0; i<n; i++){
+        if(i==0||st[i-1]!=st[i]) cout<<st[i]<<'\n';
+    }
 }

@@ -1,22 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
 pair<int,int> s[100'005];
 
 int main(){
     ios::sync_with_stdio(0); 
     cin.tie(0); 
+
+    int n;
     cin>>n;
-    for(int i=0; i<n; i++)
-        cin>>s[i].second>>s[i].first;
-    sort(s,s+n); //먼저 끝나느 시간을 비교하고, 끝나는 시간이 동일하면 시작 시간 순으로 정렬
-    int ans=0;
-    int t=0; //현재 시간
     for(int i=0; i<n; i++){
-        if(t>s[i].second) continue; //시작 시간이 현재 시간보다 이전인 회의라면 무시
-        ans++;//시작 시간이 현재 시간 이후인 회의를 찾았으므로 회의의 수에 1 증가
-        t=s[i].first; //현재 시간을 s[i]의 끝나는 시간으로 변경한다. 
+        cin>>s[i].second>>s[i].first;
     }
-    cout<<ans;
+    sort(s,s+n);
+    int cnt=1;
+    int now=s[0].first;
+    for(int i=1; i<n; i++){
+        if(now<=s[i].second) {//처음에 = 을 빼먹어서 들렸다. 몇몇 문제에서 등호 관계를 같이 고려해주지 않아서 틀리고 있다. 대소관계를 비교해야 하는경우 등호를 포함해도 되는지 안되는지에 대해서 확실하게 고민해보고 문제를 해결하도록 하자. 
+            now=s[i].first;
+            cnt++;
+        }
+    }
+    cout<<cnt;
 }

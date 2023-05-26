@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long long ans;
+int ans;
 
 void seqSum(vector<int> v){
     while(1<v.size()){
@@ -24,7 +24,7 @@ int main(){
         int t;
         cin>>t;
         if(t==1) ans+=1;
-        else if(t>1)
+        else if(t>1) //
             seqP.push_back(t);
         else
             seqN.push_back(t); 

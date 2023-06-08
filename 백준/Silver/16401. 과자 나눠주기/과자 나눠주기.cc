@@ -17,7 +17,7 @@ int main(){
     cin>>m>>n;
     for(int i=0; i<n;i++) cin>>a[i];
     int st=1;
-    int en=1'000'000'000;
+    int en=*max_element(a,a+n);
     while(st<=en){
         int mid=(st+en)/2;
         if(solve(mid)) {

@@ -18,7 +18,7 @@ int main(){
         int mid=st+1;
         int en=n-1;
         while(mid<en){
-            ll cur=(long long)a[st]+a[mid]+a[en];/*여기서 오른쪽 계산이, int a[5005]; 로
+            ll cur=1ll*a[st]+a[mid]+a[en];/*여기서 오른쪽 계산이, int a[5005]; 로
             선언한 상태에서 ll cur= a[st]+a[mid]+a[en]; 으로 작성하면, 
             오른쪽의 연산에서 int overflow가 발생한다. 아주아주 생각을 못해내다가
             뒤늦게 찾았다. 이걸 피하기 위해서는 int a[5005] 로 선언했으면,

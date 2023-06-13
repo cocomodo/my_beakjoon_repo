@@ -7,7 +7,8 @@ int a[4'005];
 int b[4'005];
 int c[4'005];
 int d[4'005];
-int ab[16'000'005];
+vector<int> sumsAB;
+vector<int> sumsCD;
 ll ans;
 
 int main() {
@@ -17,20 +18,25 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		cin >> a[i] >> b[i] >> c[i] >> d[i];
 	}
-	int cnt = 0;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			ab[cnt++] = a[i] + b[j];
+			sumsAB.push_back(a[i] + b[j]);
 		}
 	}
-	sort(ab,ab+n*n);
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			auto ub = upper_bound(ab,ab+n*n, -c[i] - d[j]);
-			auto lb = lower_bound(ab,ab+n*n, -c[i] - d[j]);
+			sumsCD.push_back(c[i] + d[j]);
+		}
+	}
+
+	sort(sumsAB.begin(), sumsAB.end());
+	sort(sumsCD.begin(), sumsCD.end());
+	for(int i=0; i<n*n;i++){
+			auto ub = upper_bound(sumsAB.begin(), sumsAB.end(), -sumsCD[i]);
+			auto lb = lower_bound(sumsAB.begin(), sumsAB.end(), -sumsCD[i]);
 			int cnt = ub - lb;
 			ans += cnt;
-		}
+		
 	}
 	cout << ans;
 }

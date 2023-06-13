@@ -3,12 +3,12 @@ using namespace std;
 
 typedef long long ll;
 int n;
-int a[4'005];
-int b[4'005];
-int c[4'005];
-int d[4'005];
-vector<int> sumsAB;
-vector<int> sumsCD;
+ll a[4'005]; //long long 
+ll b[4'005];
+ll c[4'005];
+ll d[4'005];
+vector<ll> sumsAB;
+vector<ll> sumsCD;
 ll ans;
 
 int main() {
@@ -34,7 +34,7 @@ int main() {
 	for(int i=0; i<n*n;i++){
 			auto ub = upper_bound(sumsAB.begin(), sumsAB.end(), -sumsCD[i]);
 			auto lb = lower_bound(sumsAB.begin(), sumsAB.end(), -sumsCD[i]);
-			int cnt = ub - lb;
+			ll cnt = ub - lb;
 			ans += cnt;
 		
 	}

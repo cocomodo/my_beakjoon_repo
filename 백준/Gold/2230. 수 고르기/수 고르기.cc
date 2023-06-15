@@ -3,19 +3,18 @@ using namespace std;
 
 int n, m;
 int a[100'005];
-int mn = 0x7fffffff;
+int ans=2*(1e9)+1;
 
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cin >> n >> m;
-	for (int i = 0; i < n; i++) cin >> a[i];
-	sort(a, a + n);
-	int en = 0;
-	for (int st = 0; st < n; st++) {
-		while (en < n && a[en] - a[st] < m) en++;
-		if (en == n) break;
-		mn = min(mn, a[en] - a[st]);
-	}
-	cout << mn;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cin>>n>>m;
+    for(int i=0; i<n; i++) cin>>a[i];
+    sort(a,a+n);
+    for(int i=0; i<n; i++){
+        int tmp=lower_bound(a,a+n,a[i]+m)-a;
+        if(tmp==n) break; 
+        ans=min(ans,a[tmp]-a[i]);
+    }
+    cout<<ans;
 }

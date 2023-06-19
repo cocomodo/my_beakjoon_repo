@@ -1,30 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-unordered_set<string> worker;
+unordered_set<string> s;
 
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
+
+    int n;
     cin>>n;
-    string name;
-    string state;
     while(n--){
-        cin>>name>>state;
-        if(state=="enter"){
-            worker.insert(name);
-        }
-        if(state=="leave"){
-            worker.erase(name);
-        }
+        string name, log;
+        cin>>name>>log;
+        if(log=="enter") s.insert(name);
+        else s.erase(name);
     }
-    vector<string> ans;
-    for(auto e : worker){
-        string tmp;
-        tmp=e;
-        ans.push_back(e);
-    }
+    vector<string> ans(s.begin(),s.end());
     sort(ans.begin(),ans.end(),greater<string>());
-    for(auto s:ans) cout<<s<<'\n';
+    for(auto x: ans) cout<<x<<'\n';
 }

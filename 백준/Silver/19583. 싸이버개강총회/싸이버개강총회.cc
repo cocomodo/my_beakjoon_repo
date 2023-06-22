@@ -30,7 +30,7 @@ int main(){
         ch_tnum=ttoi(ch_t);
         if(ch_tnum<=st_tnum)
             slist.insert(user_id);
-        else if(ch_tnum>=en_tnum && ch_tnum<=quit_tnum){
+        if(ch_tnum>=en_tnum && ch_tnum<=quit_tnum){
             if(slist.find(user_id)!=slist.end()){
                 flist.insert(user_id);
             }

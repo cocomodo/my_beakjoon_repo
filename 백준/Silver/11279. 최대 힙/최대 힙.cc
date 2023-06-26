@@ -2,8 +2,7 @@
 using namespace std;
 
 int n; 
-priority_queue<int> pq;
-
+priority_queue<int,deque<int>,less<int>> pq;
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);

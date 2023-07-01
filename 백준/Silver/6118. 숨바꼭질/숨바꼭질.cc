@@ -1,41 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> adj[20'005];
-int n, m; 
-int dist[20'005];
-vector<int> cand;
-int mx;
+const int MX = 20'000;
 
-void bfs(int st){
-    queue<int> q; 
-    dist[st]=0;
-    q.push(st);
-    while(!q.empty()){
-        int cur=q.front(); q.pop();
-        for(auto nxt: adj[cur]){
-            if(dist[nxt]!=-1) continue;
-            dist[nxt]=dist[cur]+1;
-            q.push(nxt);
-        }
-    }
-    mx=*max_element(dist+1,dist+n+1);
-    for(int i=1; i<=n; i++){
-        if(dist[i]==mx) cand.push_back(i);
-    }
-}
+vector<int> adj[MX + 2];
+int dist[MX + 2], mx;
 
-int main(){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin>>n>>m;
-    while(m--){
-        int u, v;
-        cin>>u>>v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+int main() {
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+
+  memset(dist, -1, sizeof(dist));
+
+  int n, m; cin >> n >> m;
+
+  while(m--) {
+    int u, v; cin >> u >> v;
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+  }
+
+  queue<int> q;
+  q.push(1);
+  dist[1] = 0;
+
+  // bfs
+  while(!q.empty()) {
+    int cur = q.front(); q.pop();
+    for(int nxt : adj[cur]) {
+      if(dist[nxt] != -1) continue;
+      dist[nxt] = dist[cur] + 1;
+      mx = max(dist[nxt], mx);
+      q.push(nxt);
     }
-    fill(dist,dist+20'005,-1);
-    bfs(1);
-    cout<<cand[0]<<' '<<mx<<' '<<cand.size();
+  }
+  int cnt = 0;
+  for(int i = 1; i <= n; i++) {
+    if(dist[i] == mx) {
+      if(!cnt) cout << i << ' ';
+      cnt++;
+    }
+  }
+  cout << mx << ' ' << cnt;
 }

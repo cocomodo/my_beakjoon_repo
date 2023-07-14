@@ -26,14 +26,14 @@ int main(){
     
     chk[1]=true;
     for(auto nxt: adj[1]){
-        if(chk[nxt.second]!=true) pq.push({nxt.first,1,nxt.second});
+        pq.push({nxt.first,1,nxt.second});//if(chk[nxt.second]!=true) 이 부분을 제외하였다. 처음에는 그냥 다 넣어주는구나.
     }
     long long ans=0;
     int cnt=0;
     while(cnt<n-1){
         int cost, a, b;
         tie(cost, a, b)=pq.top(); pq.pop();
-        if(chk[b]) continue; //이걸 빼먹었네. 아주 중요한데 이걸 빼먹었어. 
+        if(chk[b]) continue; //이게 핵심이었는데, 이걸 빼먹었어. 가장 처음에는 다 넣어주고 판단부를 이렇게 while문 안쪽에다가 넣어주어야 한다. 
         chk[b]=true;
         ans+=cost;
         cnt++;

@@ -11,12 +11,12 @@ int main(){
     cin>>n;
     tower.push({100'000'005,0});
     for(int i=1; i<=n; i++){
-        int height;
-        cin>>height;
-        while(tower.top().first<height)
+        int h;
+        cin>>h;
+        while(tower.top().first<=h){
             tower.pop();
+        }
         cout<<tower.top().second<<' ';
-        tower.push({height,i});
+        tower.push({h,i});
     }
-
 }

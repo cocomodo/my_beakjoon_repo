@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
@@ -9,7 +10,7 @@ int main(){
     while(n--){
         string init;
         cin>>init;
-        list<char> L={};
+        list<char> L;
         auto cursor=L.end();
         for(auto c: init){
             if(c=='<'){
@@ -24,13 +25,13 @@ int main(){
                     cursor=L.erase(cursor);
                 }
             }
-            else{ //글자일때,
+            else{
                 L.insert(cursor,c);
             }
         }
-        for(auto c: L){
+        for(auto c: L)
             cout<<c;
-        }
         cout<<'\n';
+        
     }
 }

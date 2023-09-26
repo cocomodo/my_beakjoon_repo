@@ -1,19 +1,14 @@
 #include <string>
 #include <vector>
-
+#include <algorithm>
+#include <iostream>
 using namespace std;
 
 vector<int> solution(vector<int> array) {
     vector<int> answer;
-    int mx=-1;
-    int idx=0;
-    for(int i=0; i<array.size(); i++){
-        if(mx<array[i]){
-            mx=array[i];
-            idx=i;
-        }
-    }
-    answer.emplace_back(mx);
-    answer.emplace_back(idx);
+    auto it=max_element(array.begin(),array.end());
+    // cout<<it-array.begin();
+    answer.emplace_back(*it);
+    answer.emplace_back(it-array.begin());
     return answer;
 }

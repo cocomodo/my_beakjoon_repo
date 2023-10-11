@@ -3,15 +3,21 @@
 
 using namespace std;
 
+int result = 0;
+
 int solution(int chicken) {
-    int answer = 0;
-    int cp=chicken; //1081 일시에
-    int service=0;
     
-    while(cp>=10){
-        service=cp/10;
-        answer+=service;
-        cp=service+cp%10;
+    int numOfTck = chicken;
+    int serviceChicken;
+    
+    while (numOfTck >= 10 ){
+        
+        serviceChicken = numOfTck / 10;
+        result += serviceChicken;
+        numOfTck = numOfTck % 10;
+        numOfTck += serviceChicken;
+        
     }
-    return answer;
+    
+    return result;
 }

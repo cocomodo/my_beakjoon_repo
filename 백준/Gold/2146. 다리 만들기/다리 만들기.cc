@@ -2,38 +2,38 @@
 using namespace std;
 
 int board[105][105];
-int vis[105][105];
+bool vis[105][105];
 int dist[105][105];
 int dx[4]={1,0,-1,0};
 int dy[4]={0,1,0,-1};
-int n , cnt=0;
+int n;
+bool OOB(int a, int b){
+  return a<0 || a>=n || b<0 || b>=n;
+}
 
-queue<pair<int,int>> q;
-
-//주어진 섬들에 개별적으로 다른 번호를 붙여서 구분짓게 해주는 bfs 함수
-void numbering_land(){
-//cnt는 섬의 번호를 의미, board[i][j]의 값이 같은 경우 같은 섬
+void island(){
+  int idx=1;
   for(int i=0; i<n; i++){
     for(int j=0; j<n; j++){
+      if(vis[i][j]) continue;
       if(board[i][j]==0) continue;
-      if(vis[i][j]==1) continue;
-      cnt++;
-      vis[i][j]=1;
-      board[i][j]=cnt;
-      q.push({i,j});
-      while(!q.empty()){
-        auto cur=q.front(); q.pop();
+      queue<pair<int,int>> Q;
+      Q.push({i,j});
+      vis[i][j]=true;
+      while(!Q.empty()){
+        auto cur = Q.front(); Q.pop();
+        board[cur.first][cur.second]= idx; 
         for(int dir=0; dir<4; dir++){
           int nx=cur.first+dx[dir];
           int ny=cur.second+dy[dir];
-          if(nx<0||nx>=n||ny<0||ny>=n) continue;
-          if(vis[nx][ny]==1) continue;
+          if(OOB(nx,ny)) continue;
+          if(vis[nx][ny]) continue;
           if(board[nx][ny]==0) continue;
-          board[nx][ny]=cnt;
-          vis[nx][ny]=1;
-          q.push({nx,ny});
+          Q.push({nx,ny});
+          vis[nx][ny]=true;
         }
-      }
+      } 
+      idx++;
     }
   }
 }
@@ -42,45 +42,38 @@ int main(){
   ios::sync_with_stdio(0);
   cin.tie(0);
   cin>>n;
-  for(int i=0; i<n; i++){
-    for(int j=0; j<n; j++) 
+  for(int i=0; i<n; i++)
+    for(int j=0; j<n; j++)
       cin>>board[i][j];
-  }
-  //bfs를 돌면서 섬들에 1부터 시작하는 번호로 섬들의 땅의 값들을 바꾸어서 구분지어주는 함수.
-  numbering_land();
-
+  island();
   for(int i=0; i<n; i++)
     fill(dist[i],dist[i]+n,-1);
-  
-  int ans=0x7f7f7f7f;
-  // 모든 육지 (i,j)의 각각에 대해 bfs를 진행. 이때 board[i][j]와 board[nx][ny]가 다른 최초의 (nx,ny)를 찾으면 (i,j)에서 시작하는 다리의 길이를 계산 가능. 
-
+  queue<pair<int,int>> Q;
   for(int i=0; i<n; i++){
     for(int j=0; j<n; j++){
-      if(board[i][j]==0) continue;
-      q.push({i,j});
-      dist[i][j]=0;
-      bool escape=false;
-      while(!q.empty() && !escape){
-        auto cur=q.front(); q.pop();
-        for(int dir=0; dir<4; dir++){
-          int nx=cur.first + dx[dir];
-          int ny=cur.second + dy[dir];
-          if(nx<0||nx>=n||ny<0||ny>=n) continue;
-          if(dist[nx][ny]>=0) continue;
-          if(board[i][j]==board[nx][ny]) continue;
-          if(board[nx][ny]!=0 && board[i][j]!=board[nx][ny]){
-            ans=min(ans,dist[cur.first][cur.second]);
-            while(!q.empty()) q.pop();
-            escape=true;
-            break;
-          }
-          dist[nx][ny]=dist[cur.first][cur.second]+1;
-          q.push({nx,ny});
-        }
+      if(board[i][j]!=0){//모든 점을 bfs의 대상으로 만들기 위해 dist 0으로 표시하고 queue에 넣기. 
+        dist[i][j]=0;
+        Q.push({i,j});
       }
-      for(int i=0; i<n; i++)
-        fill(dist[i],dist[i]+n,-1);
+    }
+  }
+  int ans=0x7f7f7f7f;
+  while(!Q.empty()){
+    auto cur= Q.front(); Q.pop();
+    for(int dir=0; dir<4; dir++){
+      int nx=cur.first+dx[dir];
+      int ny=cur.second+dy[dir];
+      if(OOB(nx,ny)) continue;
+      if(board[nx][ny]==board[cur.first][cur.second]) continue; //인접한 섬이 같은 섬의 일부일 경우 건너뛰기
+      if(board[nx][ny]!=0){
+        //인접한 섬이 현재 섬과 같지 않은데 0이 아니므로 다른 섬
+        ans=min(ans, dist[nx][ny]+dist[cur.first][cur.second]);
+      }
+      else{//바다일 경우
+        board[nx][ny]=board[cur.first][cur.second];
+        dist[nx][ny]=dist[cur.first][cur.second]+1;
+        Q.push({nx,ny});
+      }
     }
   }
   cout<<ans;

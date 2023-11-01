@@ -75,8 +75,19 @@ int math1(vector<int>& v){
     return cnt;
 }
 
-bool cmp(pair<int,int> p,pair<int,int> q){
-    return p.first>q.first || p.second<q.second;
+// bool cmp(pair<int,int> p,pair<int,int> q){
+//     return p.first>q.first || p.second<q.second;
+// }
+bool cmp(const std::pair<int, int>& a, const std::pair<int, int>& b) {
+    // 먼저 first를 내림차순으로 정렬합니다.
+    if (a.first > b.first) {
+        return true;
+    }
+    else if (a.first < b.first) {
+        return false;
+    }
+    // 만약 first가 같으면 second를 오름차순으로 정렬합니다.
+    return a.second < b.second;
 }
 vector<int> solution(vector<int> v) {
     vector<int> answer;
@@ -90,7 +101,12 @@ vector<int> solution(vector<int> v) {
     tmp.push_back(p);
     tmp.push_back(q);
     tmp.push_back(r);
+    cout<<"before"<<'\n';
+    for(auto t: tmp){
+        cout<<t.first<<" : "<<t.second<<'\n';
+    }
     sort(tmp.begin(),tmp.end(),cmp);
+    cout<<"after"<<'\n';
     for(auto t: tmp){
         cout<<t.first<<" : "<<t.second<<'\n';
     }
